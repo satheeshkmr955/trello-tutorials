@@ -2,6 +2,7 @@
 import { ElementRef, useRef } from "react";
 import { XIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 import {
   Popover,
@@ -10,13 +11,13 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useAction } from "@/hooks/use-action";
+import { useProModal } from "@/hooks/use-pro-modal";
 import { createBoard } from "@/actions/create-board";
 
 import { Button } from "@/components/ui/button";
 import { FormInput } from "@/components/form/form-input";
 import { FormSubmit } from "@/components/form/form-submit";
-import { toast } from "sonner";
-import { FormPicker } from "./form-picker";
+import { FormPicker } from "@/components/form/form-picker";
 
 interface FormPopoverProps {
   children: React.ReactNode;
@@ -28,6 +29,7 @@ interface FormPopoverProps {
 export const FormPopover = (props: FormPopoverProps) => {
   const { children, side = "bottom", align, sideOffset = 0 } = props;
 
+  const proModal = useProModal();
   const router = useRouter();
   const closeRef = useRef<ElementRef<"button">>(null);
 
@@ -39,6 +41,7 @@ export const FormPopover = (props: FormPopoverProps) => {
     },
     onError: (error) => {
       toast.error(error);
+      proModal.onOpen();
     },
   });
 

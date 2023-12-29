@@ -6,7 +6,12 @@ import { CreditCardIcon } from "lucide-react";
 
 import { Skeleton } from "@/components/ui/skeleton";
 
-export const Info = () => {
+interface InfoProps {
+  isPro: boolean;
+}
+
+export const Info = (props: InfoProps) => {
+  const { isPro } = props;
   const { organization, isLoaded } = useOrganization();
 
   if (!isLoaded) {
@@ -29,7 +34,7 @@ export const Info = () => {
 
         <div className="flex items-center text-xs text-muted-foreground">
           <CreditCardIcon className="h-3 w-3 mr-1" />
-          Free
+          {isPro ? "Pro" : "Free"}
         </div>
       </div>
     </div>
